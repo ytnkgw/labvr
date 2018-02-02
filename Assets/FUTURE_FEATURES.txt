@@ -1,0 +1,4 @@
+- Spotify integration
+- Dj kit
+- Dancing effect
+- Multiplayer
