@@ -1,4 +1,7 @@
-- Spotify integration
 - Dj kit
 - Dancing effect
 - Multiplayer
+
+====
+- Spotify integration : can't access to full tracks
+- SoundCloud integration : no longer register app, so done
