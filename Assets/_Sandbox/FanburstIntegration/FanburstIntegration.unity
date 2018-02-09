@@ -299,3 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e0cfc490a754c4aa03211865cac838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_ClientId: d1efe2c7-720d-4860-b4fc-f059044c802b
+  m_ClientSecret: c377c886e51e6ef7ac89b6663bc6bc6f72838d17f70a3eeb49348722c6d06400
+  m_RedirectURL: http://localhost
+  m_ListenPort: 8080

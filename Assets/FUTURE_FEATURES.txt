@@ -1,6 +1,10 @@
+[FEATURES]
 - Dj kit
 - Dancing effect
 - Multiplayer
+
+[TODO]
+- Use webview to auth
 
 ====
 - Spotify integration : can't access to full tracks
