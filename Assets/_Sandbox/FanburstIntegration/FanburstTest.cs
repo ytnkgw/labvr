@@ -1,3 +1,4 @@
+using MyLib;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -17,12 +18,14 @@ namespace LABVR.FanburstIntegration
 			"client_id={0}&" +
 			"redirect_uri={1}&" +
 			"response_type=code";
-		private readonly string ACCESS_TOKEN_BASE_URL = "https://fanburst.com/oauth/token?" +
+		private readonly string ACCESS_TOKEN_BASE_URL = 
+			"https://fanburst.com/oauth/token?" +
 			"client_id={0}&" +
 			"client_secret={1}&" +
-			"grant_type=code&" +
+			"grant_type=authorization_code&" +
 			"code={2}&" +
 			"redirect_uri={3}";
+		private readonly string ACCESS_TOKEN = "564f7b17ebe9f2eaa902f42e20d0708ff0602cfd532afdd9e54011be2b638fb9";
 
 		[SerializeField]
         private string m_ClientId = "";
@@ -37,11 +40,11 @@ namespace LABVR.FanburstIntegration
 		private Thread authThread = null;
 
 
-
 		private void Update()
 		{
 			if (Input.GetKeyUp(KeyCode.Space))
 			{
+				//StartCoroutine(GetAccessToken(authCode));
 				StartCoroutine(Auth());
 			}
 		}
@@ -52,6 +55,14 @@ namespace LABVR.FanburstIntegration
 			if (authThread != null) authThread.Abort();
 		}
 
+		//private IEnumerator Me()
+		//{
+		//	request.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+		//	request.SetRequestHeader("Accept-Version", "v1");
+		//	request.method = UnityWebRequest.kHttpVerbPOST;
+		//	request.downloadHandler = new DownloadHandlerBuffer();
+		//}
+
 		/*
 		 * PROBLEM ::
 		 * In current fanburst circumstance, you have to log in before call auth.
@@ -59,28 +70,28 @@ namespace LABVR.FanburstIntegration
 		 */
 		private IEnumerator Auth()
 		{
+			bool hasAuthCode = false;
+			string authCode = string.Empty;
+
 			// Build url
 			string redirectURI = m_RedirectURL + ":" + m_ListenPort + "/";
-
-			Debug.Log("URL : " + WWW.EscapeURL(redirectURI));
 			string authURL = string.Format(AUTH_URL, m_ClientId, WWW.EscapeURL(redirectURI));
 
 			// Create listener
 			authListener = new HttpListener();
 			authListener.Prefixes.Add(redirectURI);
 			authListener.Start();
-			
 
 			// Start thread for listener
 			authThread = new Thread(
 				() =>
 				{
 					HttpListenerContext context = authListener.GetContext();
-					System.Uri uri = context.Request.Url;
-					var query = uri.Query;
-					//query.key
+					Dictionary<string, string> query = Utils.ParseQueryString(context.Request.Url.ToString());
+					authCode = query["code"];
+					hasAuthCode = true;
+					Debug.Log("Auth Code : " + authCode);
 
-					Debug.Log("auth code : " + context.Request.Url);
 					// Kill listeners
 					authListener.Abort();
 					authListener = null;
@@ -94,38 +105,55 @@ namespace LABVR.FanburstIntegration
 			// TODO :: Use webview
 			Application.OpenURL(authURL);
 
-			yield return null;
+			while (!hasAuthCode)
+			{
+				yield return 0;
+			}
+
+			StartCoroutine(GetAccessToken(authCode));
 		}
 
-		private IEnumerator GetAccessToken(HttpListener context)
+		private IEnumerator GetAccessToken(string authCode)
 		{
 			string redirectURI = WWW.EscapeURL(m_RedirectURL + ":" + m_ListenPort + "/");
-			string code = "";
-			string url = string.Format(ACCESS_TOKEN_BASE_URL, m_ClientId, m_ClientSecret, code, redirectURI);
+			string url = string.Format(ACCESS_TOKEN_BASE_URL, m_ClientId, m_ClientSecret, authCode, redirectURI);
 
 			var request = new UnityWebRequest();
 			request.url = url;
 			request.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			request.SetRequestHeader("Accept-Version", "v1");
 			request.method = UnityWebRequest.kHttpVerbPOST;
+			request.downloadHandler = new DownloadHandlerBuffer();
 
 			yield return request.SendWebRequest();
 
+			// TODO :: Error handling
 			if (request.isNetworkError)
 			{
 				// Network error handling
+				Debug.LogWarning("[Fanburst Test] Network error : " + request.error.ToString());
 			}
 			else if (request.isHttpError)
 			{
 				// Http error handling
+				Debug.LogWarning("[Fanburst Test] Http error : " + request.error.ToString());
 			}
 			else
 			{
 				if (request.responseCode == 200)
 				{
-					Debug.Log("Access Token : " + request.downloadHandler.text);
+					if (request.downloadHandler != null)
+					{
+						Debug.Log("Access Token : " + request.downloadHandler.text);
+					}
+					else
+					{
+						Debug.Log("Can't access to the result");
+					}
 				}
 			}
+
+			request.Abort();
 
 		}
 
