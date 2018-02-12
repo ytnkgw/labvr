@@ -3,6 +3,11 @@
 - Dancing effect
 - Multiplayer
 
+[NEXT]
+1. Motion effect lesson
+2. integration with motion effect and audio reactive
+3. mock of bunch of motion effect
+
 [TODO]
 - Use webview to auth
 

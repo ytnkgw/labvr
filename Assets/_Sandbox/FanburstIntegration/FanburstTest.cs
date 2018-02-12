@@ -1,4 +1,5 @@
 using MyLib;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -26,6 +27,11 @@ namespace LABVR.FanburstIntegration
 			"code={2}&" +
 			"redirect_uri={3}";
 		private readonly string ACCESS_TOKEN = "564f7b17ebe9f2eaa902f42e20d0708ff0602cfd532afdd9e54011be2b638fb9";
+
+		private readonly string ME_URL = 
+			"https://api.fanburst.com/me/?" +
+			"access_token={0}&" +
+			"client_id={1}";
 
 		[SerializeField]
         private string m_ClientId = "";
@@ -55,13 +61,17 @@ namespace LABVR.FanburstIntegration
 			if (authThread != null) authThread.Abort();
 		}
 
-		//private IEnumerator Me()
-		//{
-		//	request.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
-		//	request.SetRequestHeader("Accept-Version", "v1");
-		//	request.method = UnityWebRequest.kHttpVerbPOST;
-		//	request.downloadHandler = new DownloadHandlerBuffer();
-		//}
+		private IEnumerator Me(Action<string> callback)
+		{
+			var request = new UnityWebRequest();
+			request.url = string.Format(ME_URL, ACCESS_TOKEN, m_ClientId);
+			request.SetRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			request.SetRequestHeader("Accept-Version", "v1");
+			request.method = UnityWebRequest.kHttpVerbGET;
+			request.downloadHandler = new DownloadHandlerBuffer();
+
+			yield return request.SendWebRequest();
+		}
 
 		/*
 		 * PROBLEM ::
