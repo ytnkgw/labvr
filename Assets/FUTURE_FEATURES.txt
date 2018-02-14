@@ -1,15 +1,19 @@
 [FEATURES]
-- Dj kit
 - Dancing effect
+- Dj kit
+- Vj kit
 - Multiplayer
+https://www.photonengine.com/ja-JP/Photon
 
 [NEXT]
 1. Motion effect lesson
 2. integration with motion effect and audio reactive
+3. integration with downloaded audio from fanburst and effect above
 3. mock of bunch of motion effect
 
 [TODO]
 - Use webview to auth
+https://docs.vrchat.com/docs/vrc_webpanel
 
 ====
 - Spotify integration : can't access to full tracks
