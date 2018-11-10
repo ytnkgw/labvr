@@ -13,7 +13,7 @@ namespace LABVR.FanburstIntegration
 
     public class FanburstTest : MonoBehaviour
     {
-		private readonly string BASE_URL = "https://api.fanburst.com";
+		//private readonly string BASE_URL = "https://api.fanburst.com";
 		private readonly string AUTH_URL = 
 			"https://fanburst.com/oauth/authorize?" +
 			"client_id={0}&" +
