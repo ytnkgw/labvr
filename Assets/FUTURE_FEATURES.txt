@@ -1,6 +1,6 @@
-[FEATURES]
-- Dancing effect
+﻿[FEATURES]
 - Dj kit
+- Dancing effect
 - Vj kit
 - Multiplayer
 https://www.photonengine.com/ja-JP/Photon
@@ -11,8 +11,11 @@ https://www.photonengine.com/ja-JP/Photon
 3. integration with downloaded audio from fanburst and effect above
 3. mock of bunch of motion effect
 
+[DONE]
+- 11.11 : DJ Kit : Audio再生
+
 [TODO]
-- Use webview to auth
+- Integration : Use webview to auth
 https://docs.vrchat.com/docs/vrc_webpanel
 
 ====
