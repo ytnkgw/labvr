@@ -12,6 +12,8 @@ https://www.photonengine.com/ja-JP/Photon
 3. mock of bunch of motion effect
 
 [DONE]
+- 11.11 : DJ Kit : AudioMixserのParamEQを使用してエコライザー機能をかける方法を発見した
+- 11.11 : DJ Kit : AudioMixserを使用して複数の音声チャンネルに対して音量の調整やフィルターをかける方法を発見した
 - 11.11 : DJ Kit : Audio再生
 
 [TODO]
@@ -21,3 +23,4 @@ https://docs.vrchat.com/docs/vrc_webpanel
 ====
 - Spotify integration : can't access to full tracks
 - SoundCloud integration : no longer register app, so done
+- 視覚の遠近感 : Audio Reverve Filterで残響かけることで空間の奥行を作り出せるかも
