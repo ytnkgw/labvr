@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Sandbox.DjKit
 {
@@ -31,6 +32,11 @@ namespace Sandbox.DjKit
 		{
 			
 		}
+
+		private void OnAudioFilterRead(float[] data, int channels)
+		{
+			Debug.Log("[OnAudioFilterRead] channels : " + channels + " : " + data);
+		}
 		#endregion // MonoBehaviour functions
 
 
@@ -44,7 +50,7 @@ namespace Sandbox.DjKit
 			_audioSource.Pause();
 		}
 
-		// TODO : イコライザー
+		// TODO : イコライザー : ParamEQの値を変更する
 		// TODO : 波形 : http://tips.hecomi.com/entry/2014/11/11/021147
 
 	}
