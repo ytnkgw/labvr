@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UniRx;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Sandbox.DjKit
 {
@@ -9,8 +9,6 @@ namespace Sandbox.DjKit
 	{
 		[SerializeField]
 		private AudioSource _audioSource;
-
-		private List<System.IDisposable> _streams = new List<System.IDisposable>();
 
 
 		#region MonoBehaviour functions
@@ -32,19 +30,12 @@ namespace Sandbox.DjKit
 
 		private void Update()
 		{
-			// TEST
-			// TODO:C : 本番はUniRxで管理してUpdate外で管理します
-			if (Input.GetKeyUp(KeyCode.P))
-			{
-				if (_audioSource.isPlaying)
-				{
-					Pause();
-				}
-				else
-				{
-					Play();
-				}
-			}
+			
+		}
+
+		private void OnAudioFilterRead(float[] data, int channels)
+		{
+			Debug.Log("[OnAudioFilterRead] channels : " + channels + " : " + data);
 		}
 		#endregion // MonoBehaviour functions
 
@@ -58,5 +49,9 @@ namespace Sandbox.DjKit
 		{
 			_audioSource.Pause();
 		}
+
+		// TODO : イコライザー : ParamEQの値を変更する
+		// TODO : 波形 : http://tips.hecomi.com/entry/2014/11/11/021147
+
 	}
 }
