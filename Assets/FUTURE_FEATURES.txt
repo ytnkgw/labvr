@@ -17,6 +17,9 @@ https://www.photonengine.com/ja-JP/Photon
 - 視覚の遠近感 : Audio Reverve Filterで残響かけることで空間の奥行を作り出せるかも
 
 [DONE]
+- 11.16 : General : Custom Render Textureの存在を知った。RenderTextureに書き込むような処理がもちょっと簡単にできそう
+- 11.16 : Danceing Effect : Reaction Diffusionの存在を知った
+- 11.15 : General : Shader Graphの使い方を学んだ。→ Shaderの結果を見たい時とかこれは便利だと思う。
 - 11.15 : General : Shaderで透過処理を行う方法を学んだ
 - 11.14 : General : GPU InstancingをShaderで行う方法がわかった
 - 11.14 : General : 3次元座標空間において4x4の行列が拡大縮小、平行移動、もしくは回転に利用できることがわかた
